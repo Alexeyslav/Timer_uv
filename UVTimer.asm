@@ -67,8 +67,8 @@ RETI ;rjmp ANA_COMP ; Analog Comparator Handler
 RETI ;rjmp TWI ; 2-wire Serial Interface Handler
 RETI ;rjmp SPM_RDY ; Store Program Memory Ready Handler
 
-TIM2_OVF: // Прерывание от таймера динамической индикации. 
-//берем последовательно значения из массива RAM Led_Digits и выводим в регистр, переключая разряды. 
+TIM2_OVF: // Прерывание от таймера динамической индикации.
+//берем последовательно значения из массива RAM Led_Digits и выводим в регистр, переключая разряды.
 IN		int_sreg, SREG
 PUSH	ACCUM
 PUSH	tempi
@@ -93,10 +93,10 @@ rcall LED_SET_REG
 
 POP		tempi
 POP		ACCUM
-OUT	SREG, SREG_INT
+OUT	SREG, int_sreg
 RETI
 
-RESET: 
+RESET:
  ldi	ACCUM,	high(RAMEND)
  out	SPH,	ACCUM        ; Set Stack Pointer to top of RAM
  ldi	ACCUM,	low(RAMEND)
@@ -106,11 +106,11 @@ RESET:
 set_io PORTB, 0 // все начальные состояния портов - по нулям.
 set_io PORTC, 0
 set_io PORTD, 0
-//If DDxn is written logic one , Pxn is configured as an output. 
+//If DDxn is written logic one , Pxn is configured as an output.
 //If DDxn is written logic zero, Pxn is configured as an input.
-set_io DDRB, 0xb00111111  //старшие разряды - кварцевый генератор
-set_io DDRC, 0xb00111111  //старшие разряды не реализованы на выход
-set_io DDRD, 0xb11111100  //RX-TX настроены как ВХОДЫ, при включении приемопередатчика их функция будет иметь приоритет над настройкой порта.
+set_io DDRB, 0b00111111  //старшие разряды - кварцевый генератор
+set_io DDRC, 0b00111111  //старшие разряды не реализованы на выход
+set_io DDRD, 0b11111100  //RX-TX настроены как ВХОДЫ, при включении приемопередатчика их функция будет иметь приоритет над настройкой порта.
 
 
 
