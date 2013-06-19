@@ -25,7 +25,7 @@
 .endmacro
 
 .macro skip_if_sensor
- SBIS PIN@0
+ SBIC PIN@0
 .endmacro
 
 
@@ -43,7 +43,6 @@
  nop
  nop
  skip_if_sensor @0
- ret
  CLC
 .endmacro
 
